@@ -6,11 +6,16 @@ let todo = ref(null);
 let selectedTodo = ref(null);
 
 const addTodo = () => {
+  if (!todo.value || todo.value.trim() === "") {
+    alert("Todo cannot be empty!");
+    return;
+  }
+
   if (validateTodo(todo.value)) {
     let id = todoList.value.length;
     todoList.value.push({
       id: ++id,
-      todo: todo.value,
+      todo: todo.value.trim(),
       is_done: false
     });
     todo.value = null;
@@ -33,10 +38,15 @@ const selectTodo = (row) => {
 };
 
 const updateTodo = () => {
+  if (!todo.value || todo.value.trim() === "") {
+    alert("Todo cannot be empty!");
+    return;
+  }
+
   if (validateTodo(todo.value)) {
     let index = todoList.value.findIndex((t) => t.id === selectedTodo.value.id);
     if (index !== -1) {
-      todoList.value[index].todo = todo.value;
+      todoList.value[index].todo = todo.value.trim();
     }
     todo.value = null;
     selectedTodo.value = null;
@@ -61,6 +71,7 @@ const removeTodo = (row) => {
   }
 };
 </script>
+
 
 <template>
   <div class="d-flex justify-content-center container">
